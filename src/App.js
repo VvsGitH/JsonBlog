@@ -1,9 +1,11 @@
-import React from 'react';
+import Header from './components/Header/header.component';
+import BlogPage from './components/BlogPage/blogPage.component';
 
 function App() {
 	return (
 		<div className='App'>
-			<h1>MY NEW APP</h1>
+			<Header />
+			<BlogPage />
 		</div>
 	);
 }

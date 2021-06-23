@@ -1,0 +1,13 @@
+.main-header {
+	width: 100%;
+	background-color: lightblue;
+
+	.header-bar {
+		width: 80%;
+		margin: 0 auto;
+		padding: 10px 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
