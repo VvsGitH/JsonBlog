@@ -1,26 +1,23 @@
-import useFetch from '../../customHooks/useFetch';
+import usePosts from '../../customHooks/usePosts';
+import Post from '../Post/post.component';
 
 const BlogPage = () => {
-	const [posts, setPosts] = useFetch(
-		'https://jsonplaceholder.typicode.com/posts'
-	);
-	const [users, setUsers] = useFetch(
-		'https://jsonplaceholder.typicode.com/users'
-	);
-	const [comments, setComments] = useFetch(
-		'https://jsonplaceholder.typicode.com/comments'
-	);
+	const { posts, users, comments, isLoading, isError } = usePosts();
+
+	if (isLoading) return <p>Loading...</p>;
+
+	if (isError) return <p>Something went wrong, reload the page</p>;
 
 	return (
 		<div>
 			{posts.map(post => (
-				<div key={post.id}>
-					<span>{users.find(user => user.id === post.userId).name}</span>
-					<h3>{post.title}</h3>
-					<p>{post.body}</p>
-
-					<br />
-				</div>
+				<Post
+					key={post.id}
+					author={users.find(user => user.id === post.userId)}
+					title={post.title}
+					content={post.body}
+					comments={comments}
+				/>
 			))}
 		</div>
 	);
