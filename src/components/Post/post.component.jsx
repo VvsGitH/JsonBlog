@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,26 +12,21 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		maxWidth: '800px',
-	},
-	avatar: {
-		width: theme.spacing(10),
-		height: theme.spacing(10),
-	},
-}));
+import usePostStyles from './post.style';
 
-const Post = ({ author, title, content, comments }) => {
-	const classes = useStyles();
+import CommentList from '../CommentList/commentlist.component';
+
+const Post = ({ id, author, title, content }) => {
 	const [expanded, setExpanded] = useState(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
 
+	const classes = usePostStyles();
+
 	return (
-		<Card className={classes.root}>
+		<Card>
 			<CardHeader
 				avatar={
 					<Avatar
@@ -65,7 +58,7 @@ const Post = ({ author, title, content, comments }) => {
 				</IconButton>
 			</CardActions>
 			<Collapse in={expanded} timeout='auto' unmountOnExit>
-				COMMENTS
+				<CommentList postId={id} />
 			</Collapse>
 		</Card>
 	);

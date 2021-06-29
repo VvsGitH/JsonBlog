@@ -1,25 +1,20 @@
-import usePosts from '../../customHooks/usePosts';
-import Post from '../Post/post.component';
+import { useState } from 'react';
+import Container from '@material-ui/core/Container';
+
+import PostList from '../PostList/postlist.component';
+import SearchBar from '../SearchBar/searchbar.component';
+
+import useBlogPageStyles from './blogPage.style';
 
 const BlogPage = () => {
-	const { posts, users, comments, isLoading, isError } = usePosts();
-
-	if (isLoading) return <p>Loading...</p>;
-
-	if (isError) return <p>Something went wrong, reload the page</p>;
+	const [search, setSearch] = useState('');
+	const classes = useBlogPageStyles();
 
 	return (
-		<div>
-			{posts.map(post => (
-				<Post
-					key={post.id}
-					author={users.find(user => user.id === post.userId)}
-					title={post.title}
-					content={post.body}
-					comments={comments}
-				/>
-			))}
-		</div>
+		<Container maxWidth='lg' className={classes.root}>
+			<SearchBar value={search} handleChange={setSearch} />
+			<PostList filter={search} />
+		</Container>
 	);
 };
 

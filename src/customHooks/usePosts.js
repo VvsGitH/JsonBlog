@@ -11,13 +11,10 @@ export default function usePosts() {
 	const [users, areUsersLoading, usersError] = useFetch(
 		'https://jsonplaceholder.typicode.com/users'
 	);
-	const [comments, areCommentsLoading, commentsError] = useFetch(
-		'https://jsonplaceholder.typicode.com/comments'
-	);
 
 	useEffect(() => {
-		setLoading(arePostsLoading || areUsersLoading || areCommentsLoading);
-	}, [arePostsLoading, areUsersLoading, areCommentsLoading]);
+		setLoading(arePostsLoading || areUsersLoading);
+	}, [arePostsLoading, areUsersLoading]);
 
 	useEffect(() => {
 		let error = false;
@@ -29,12 +26,8 @@ export default function usePosts() {
 			error = true;
 			console.error(usersError);
 		}
-		if (commentsError) {
-			error = true;
-			console.error(commentsError);
-		}
 		setError(error);
-	}, [postsError, usersError, commentsError]);
+	}, [postsError, usersError]);
 
-	return { posts, users, comments, isLoading, isError };
+	return { posts, users, isLoading, isError };
 }
