@@ -7,20 +7,15 @@ import Post from '../Post/post.component';
 import usePosts from '../../customHooks/usePosts';
 
 const PostList = ({ filter = '' }) => {
-	const { posts, users, isLoading, isError } = usePosts();
+	const { signedPosts: posts, isLoading, isError } = usePosts();
 
 	if (isLoading) return <CircularProgress />;
 
 	if (isError) return <p>Something went wrong, reload the page</p>;
 
-	const filteredPosts = posts
-		.map(post => ({
-			...post,
-			author: users.find(user => user.id === post.userId),
-		}))
-		.filter(post =>
-			post.author.username.toLowerCase().includes(filter.toLowerCase())
-		);
+	const filteredPosts = posts.filter(post =>
+		post.author.username.toLowerCase().includes(filter.toLowerCase())
+	);
 
 	return (
 		<Grid container spacing={5}>
